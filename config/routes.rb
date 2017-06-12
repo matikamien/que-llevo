@@ -1,5 +1,20 @@
 Rails.application.routes.draw do
+  
+  use_doorkeeper
   devise_for :users
+
+  resources :events
+
+  # api versions: 1, module: "api/v1" do
+  #   resources :events, only: [:index] do
+  #     # collection do
+  #     #   post "/:id/add_role", to: "users#add_role_to_user"
+  #     #   post "/:id/add_permission", to: "users#add_permission_to_view_a_list"
+  #     #   get "filter", to: "users#filter_by_role"
+  #     #   get "/:id/lists", to: "users#get_lists"
+  #     # end
+  #   end 
+  # end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
