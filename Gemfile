@@ -25,6 +25,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'active_model_serializers', '~> 0.10.0'
 
+gem 'rails_12factor', group: :production
+
 gem 'rocket_pants', '~> 1.0'
 
 gem 'devise'
@@ -52,3 +54,4 @@ group :development do
   gem 'spring'
 end
 
+ruby "2.3.1"

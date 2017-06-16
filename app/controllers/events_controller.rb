@@ -14,4 +14,15 @@ class EventsController < ApplicationController
   	expose event, serializer: EventSerializer
   end
 
+  def create
+  	event = Event.create! event_params
+    expose event, serializer: EventSerializer
+  end
+
+  private
+
+  	def event_params
+      params.permit(:name, :date)
+    end
+
 end
