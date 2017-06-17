@@ -10,12 +10,12 @@
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 #
 default: &default
-  adapter: mysql2
+  adapter: postgresql
   encoding: utf8
-  pool: 5
-  username: matikamien
-  password: wordchallenge
-  socket: /var/run/mysqld/mysqld.sock
+  # For details on connection pooling, see Rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: 10
+  #socket: /var/run/postgresql/.s.PGSQL.5432
 
 development:
   <<: *default
