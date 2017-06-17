@@ -13,8 +13,11 @@
 
 ActiveRecord::Schema.define(version: 20170611211512) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "event_items", force: :cascade do |t|
-    t.integer  "event_id",   limit: 4
+    t.integer  "event_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "name",       limit: 255
@@ -30,17 +33,17 @@ ActiveRecord::Schema.define(version: 20170611211512) do
   end
 
   create_table "events_users", id: false, force: :cascade do |t|
-    t.integer "user_id",  limit: 4, null: false
-    t.integer "event_id", limit: 4, null: false
+    t.integer "user_id",  null: false
+    t.integer "event_id", null: false
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
-    t.integer  "resource_owner_id", limit: 4,     null: false
-    t.integer  "application_id",    limit: 4,     null: false
-    t.string   "token",             limit: 255,   null: false
-    t.integer  "expires_in",        limit: 4,     null: false
-    t.text     "redirect_uri",      limit: 65535, null: false
-    t.datetime "created_at",                      null: false
+    t.integer  "resource_owner_id",             null: false
+    t.integer  "application_id",                null: false
+    t.string   "token",             limit: 255, null: false
+    t.integer  "expires_in",                    null: false
+    t.text     "redirect_uri",                  null: false
+    t.datetime "created_at",                    null: false
     t.datetime "revoked_at"
     t.string   "scopes",            limit: 255
   end
@@ -48,11 +51,11 @@ ActiveRecord::Schema.define(version: 20170611211512) do
   add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
 
   create_table "oauth_access_tokens", force: :cascade do |t|
-    t.integer  "resource_owner_id", limit: 4
-    t.integer  "application_id",    limit: 4
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
     t.string   "token",             limit: 255, null: false
     t.string   "refresh_token",     limit: 255
-    t.integer  "expires_in",        limit: 4
+    t.integer  "expires_in"
     t.datetime "revoked_at"
     t.datetime "created_at",                    null: false
     t.string   "scopes",            limit: 255
@@ -63,11 +66,11 @@ ActiveRecord::Schema.define(version: 20170611211512) do
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
   create_table "oauth_applications", force: :cascade do |t|
-    t.string   "name",         limit: 255,                null: false
-    t.string   "uid",          limit: 255,                null: false
-    t.string   "secret",       limit: 255,                null: false
-    t.text     "redirect_uri", limit: 65535,              null: false
-    t.string   "scopes",       limit: 255,   default: "", null: false
+    t.string   "name",         limit: 255,              null: false
+    t.string   "uid",          limit: 255,              null: false
+    t.string   "secret",       limit: 255,              null: false
+    t.text     "redirect_uri",                          null: false
+    t.string   "scopes",       limit: 255, default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -80,7 +83,7 @@ ActiveRecord::Schema.define(version: 20170611211512) do
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
