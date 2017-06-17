@@ -6,6 +6,10 @@ class ApplicationController < RocketPants::Base
   include Doorkeeper::Rails::Helpers
   include ActionController::MimeResponds
   include ActionController::ImplicitRender
+
+  def self.mimes_for_respond_to
+    [1]
+  end
   
   def current_user
     @current_user ||= User.find doorkeeper_token.resource_owner_id
