@@ -16,6 +16,15 @@ class EventsController < ApplicationController
 
   def create
   	event = Event.create! event_params
+    
+    #Pasar a un interactor
+    user_ids_as_array = Parser.split params[ :user_ids ]
+    user_ids_as_array.each do | user_id |
+      user = User.find user_id
+      event.users << user
+    end
+    event.save!
+
     expose event, serializer: EventSerializer
   end
 

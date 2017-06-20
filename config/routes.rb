@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :events
 
+  resources :users, only: [:create, :index, :show]
+
   # api versions: 1, module: "api/v1" do
   #   resources :events, only: [:index] do
   #     # collection do
