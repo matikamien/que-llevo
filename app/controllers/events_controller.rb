@@ -18,10 +18,11 @@ class EventsController < ApplicationController
   	event = Event.create! event_params
     
     #Pasar a un interactor
-    user_ids_as_array = Parser.split params[ :user_ids ]
+    user_ids_as_array = []
+    user_ids_as_array = Parser.split params[ :user_ids ] if !params[ :user_ids ].nil? 
     user_ids_as_array.each do | user_id |
-      user = User.find user_id
-      event.users << user
+      event_user = EventUser.create! event_id:event.id , user_id:user_id
+      event.event_users << event_user
     end
     event.save!
 
