@@ -3,9 +3,19 @@ Rails.application.routes.draw do
   use_doorkeeper
   devise_for :users
 
-  resources :events
+  resources :events do 
+    collection do 
+      post "/:id/event_items/:event_item_id/assign", to: "events#assign_item"
+    end
+  end
 
   resources :users, only: [:create, :index, :show]
+
+  resources :event_items do
+    collection do
+      post "/:id/buy_item", to: "event_items#buy_item"
+    end
+  end
 
   # api versions: 1, module: "api/v1" do
   #   resources :events, only: [:index] do
