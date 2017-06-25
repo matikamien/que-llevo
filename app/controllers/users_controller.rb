@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :doorkeeper_authorize!
+  before_action :doorkeeper_authorize!, except: [ :create ]
 
 	# Devuelve todos los usuarios
   def index
