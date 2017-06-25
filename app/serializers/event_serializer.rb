@@ -1,5 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :date
+  attributes :id, :name, :date, :items_without_assignment
   has_many :event_users, serializer: EventUserSerializer
 
   def date
@@ -12,6 +12,11 @@ class EventSerializer < ActiveModel::Serializer
   def initialize(object, options={})
     super
     options[ :event_id ] = object.id
+  end
+
+  def items_without_assignment
+    items = object.event_items.where( event_user_id: nil )
+    items
   end
 
 end
