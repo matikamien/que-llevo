@@ -66,6 +66,9 @@ GEM
       railties (>= 3.2)
     erubis (2.7.0)
     execjs (2.7.0)
+    fcm (0.0.2)
+      httparty
+      json
     globalid (0.4.0)
       activesupport (>= 4.2.0)
     hashie (2.1.2)
@@ -187,6 +190,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   doorkeeper (~> 3.0.1)
+  fcm
   jbuilder (~> 2.0)
   jquery-rails
   pg (~> 0.20.0)

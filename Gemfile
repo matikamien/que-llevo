@@ -33,6 +33,8 @@ gem 'rocket_pants', '~> 1.0'
 
 gem 'devise'
 
+gem 'fcm'
+
 gem 'doorkeeper', '~> 3.0.1'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
