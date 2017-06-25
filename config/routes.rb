@@ -12,7 +12,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:create, :index, :show]
+  resources :users, only: [:create, :index, :show] do 
+    collection do 
+      post "/:id/update_token", to: "users#update_token"
+    end
+  end
 
   resources :items, only: [ :index ]
 

@@ -5,4 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_and_belongs_to_many :events
+
+  def update_token token
+  	self.firebase_token = token
+  	self.save!
+  end
 end
