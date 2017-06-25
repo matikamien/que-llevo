@@ -21,6 +21,12 @@ class EventsController < ApplicationController
     expose event, serializer: EventSerializer
   end
 
+  def add_user
+    event = Event.find params[ :id ]
+    event.add_users params[ :user_ids ],current_user.id
+    expose event, serializer: EventSerializer
+  end
+
   def assign_item
     event = Event.find params[ :id ]
     event_item = EventItem.find params[ :event_item_id ]
