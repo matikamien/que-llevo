@@ -16,17 +16,8 @@ class EventsController < ApplicationController
 
   def create
   	event = Event.create! event_params
-    
-    #Pasar a un interactor
-    user_ids_as_array = []
-    user_ids_as_array = Parser.split params[ :user_ids ] if !params[ :user_ids ].nil? 
-    user_ids_as_array.each do | user_id |
-      create_event_user_and_add_to_event user_id,event
-    end
-    create_event_user_and_add_to_event current_user.id,event
-    event.event_items << (get_default_items event.id)
-    event.save!
-
+    event.add_users params[ :user_ids ],current_user.id
+    event.add_items params[ :item_ids ]
     expose event, serializer: EventSerializer
   end
 
@@ -60,27 +51,6 @@ class EventsController < ApplicationController
 
   	def event_params
       params.permit(:name, :date)
-    end
-
-    def get_default_items event_id
-      default_items = []
-      default_items << (EventItem.create! name:'Coca Cola' , event_id: event_id)
-      default_items << (EventItem.create! name:'Fernet' , event_id: event_id)
-      default_items << (EventItem.create! name:'Hielos' , event_id: event_id)
-      default_items << (EventItem.create! name:'Tira de asado' , event_id: event_id)
-      default_items << (EventItem.create! name:'Vacio' , event_id: event_id)
-      default_items << (EventItem.create! name:'Chorizo' , event_id: event_id)
-      default_items << (EventItem.create! name:'Morcilla' , event_id: event_id)
-      default_items << (EventItem.create! name:'Provoleta' , event_id: event_id)
-      default_items << (EventItem.create! name:'Agua' , event_id: event_id)
-      default_items
-    end
-
-    def create_event_user_and_add_to_event user_id,event
-      user = User.find user_id
-      user.events << event
-      event_user = EventUser.create! event_id:event.id , user_id:user_id
-      event.event_users << event_user
     end
 
 end
