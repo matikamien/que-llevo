@@ -18,6 +18,7 @@ class EventsController < ApplicationController
   	event = Event.create! event_params
     event.add_users params[ :user_ids ],current_user.id
     event.add_items params[ :item_ids ]
+    NotificationService.invite_users_to_event event.name,params[ :user_ids ],current_user
     expose event, serializer: EventSerializer
   end
 
