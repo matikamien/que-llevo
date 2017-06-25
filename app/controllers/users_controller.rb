@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def update_token
-    user = User.find params[ :id ]
+    user = current_user
     user.update_token params[ :token ]
     expose user, serializer: UserSerializer
   end

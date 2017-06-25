@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:create, :index, :show] do 
     collection do 
-      post "/:id/update_token", to: "users#update_token"
+      post "/update_token", to: "users#update_token"
     end
   end
 
