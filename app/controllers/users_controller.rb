@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
 
+  before_action :doorkeeper_authorize!
+
 	# Devuelve todos los usuarios
   def index
-		users = User.all
+		users = User.where.not(id: current_user.id)
 		expose users, each_serializer: UserSerializer
   end
 
