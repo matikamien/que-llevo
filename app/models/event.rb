@@ -11,7 +11,6 @@ class Event < ActiveRecord::Base
       create_event_user_and_add_to_event user_id
     end
     create_event_user_and_add_to_event current_user_id
-    self.save!
 	end
 
 	def add_items items
@@ -20,7 +19,6 @@ class Event < ActiveRecord::Base
     item_ids_as_array.each do | item_id |
       create_event_item_and_add_to_event item_id
     end
-    self.save!
 	end
 
 	private
@@ -31,13 +29,15 @@ class Event < ActiveRecord::Base
       	user.events << self
 	      event_user = EventUser.create! event_id:self.id , user_id:user_id
 	      self.event_users << event_user
-      end      
+      end
+      self.save!      
     end
 
     def create_event_item_and_add_to_event item_id
     	item_name = (Item.find item_id).name
     	event_item = EventItem.create! event_id:self.id , name:item_name
     	self.event_items << event_item
+    	self.save!
     end
 
 end
