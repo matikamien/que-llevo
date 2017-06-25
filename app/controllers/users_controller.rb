@@ -16,12 +16,12 @@ class UsersController < ApplicationController
 
   # Devuelve el usuario cuyo id fue recibido.
   def show
-  	user = User.find! params[ :user_id ]
+  	user = User.find params[ :user_id ]
     expose user, serializer: UserSerializer
   end
 
   def update_token
-    user = User.find! params[ :id ]
+    user = User.find params[ :id ]
     user.update_token params[ :token ]
     expose user, serializer: UserSerializer
   end
