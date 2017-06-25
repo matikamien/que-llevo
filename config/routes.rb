@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:create, :index, :show]
 
+  resources :items, only: [ :index ]
+
   resources :event_items do
     collection do
       post "/:id/buy_item", to: "event_items#buy_item"
