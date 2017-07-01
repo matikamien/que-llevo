@@ -4,7 +4,8 @@ class NotificationService
 
 	def self.invite_users_to_event event,user_id,current_user
 		NotificationService.initialize_fcm
-		registration_ids = [user_id]
+		registration_ids = []
+		registration_ids << (User.find user_id).firebase_token
 		options = {data: 
 										 { 
 										 	 notification_code: 1, 
