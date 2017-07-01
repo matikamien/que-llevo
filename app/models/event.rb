@@ -4,13 +4,13 @@ class Event < ActiveRecord::Base
 
 	validates :name, :date, presence: :true
 
-	def add_users users,current_user_id
+	def add_users users,current_user
     user_ids_as_array = []
     user_ids_as_array = Parser.split users if !users.nil? 
     user_ids_as_array.each do | user_id |
-      create_event_user_and_add_to_event user_id
+      create_event_user_and_add_to_event user_id,current_user
     end
-    create_event_user_and_add_to_event current_user_id
+    create_event_user_and_add_to_event current_user.id,current_user
 	end
 
 	def add_items items
@@ -45,12 +45,13 @@ class Event < ActiveRecord::Base
 
 	private
 
-		def create_event_user_and_add_to_event user_id
+		def create_event_user_and_add_to_event user_id,current_user
       user = User.find user_id
       if ( !user.events.include? self )
       	user.events << self
 	      event_user = EventUser.create! event_id:self.id , user_id:user_id , spent_money:0
 	      self.event_users << event_user
+        NotificationService.invite_users_to_event self.name,[ user_id ],current_user
       end
       self.save!      
     end
