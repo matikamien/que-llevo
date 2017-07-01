@@ -39,13 +39,10 @@ class EventsController < ApplicationController
   def assign_item
     event = Event.find params[ :id ]
     event_item = EventItem.find params[ :event_item_id ]
-    if params[ :event_user_id ].nil?
-      event_item.event_user_id = nil
-      event_item.save!
-    else
+    event.desassign_item event,current_user,event_item if params[ :event_user_id ].nil?
+    if !params[ :event_user_id ].nil?
       event_user = EventUser.find params[ :event_user_id ]
-      event_user.event_items << event_item
-      event_user.save!
+      event.assign_item event,current_user,event_user,event_item
     end
     expose event, serializer: EventSerializer
   end

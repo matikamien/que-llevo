@@ -17,6 +17,23 @@ class NotificationService
 		response = @fcm.send(registration_ids, options)
 	end
 
+	def self.assign_item event,actioner_user,item_name,notificated_user,action_as_string
+		NotificationService.initialize_fcm
+		registration_ids = []
+		registration_ids << notificated_user.firebase_token
+		options = {data: 
+										 { 
+										 	 notification_code: 2, 
+											 event_name: event.name,
+									 		 user_name: ( actioner_user.name + " " + actioner_user.surname ),
+									 		 event_id: event.id,
+									 		 item_name: item_name,
+									 		 action: action_as_string
+									 	 }
+							}
+		response = @fcm.send(registration_ids, options)
+	end
+
 	private
 
 		def self.initialize_fcm

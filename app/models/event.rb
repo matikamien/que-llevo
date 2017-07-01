@@ -4,6 +4,9 @@ class Event < ActiveRecord::Base
 
 	validates :name, :date, presence: :true
 
+  DESASSIGN = "desasignó"
+  ASSIGN = "asignó"
+
 	def add_users users,current_user
     user_ids_as_array = []
     user_ids_as_array = Parser.split users if !users.nil? 
@@ -41,6 +44,26 @@ class Event < ActiveRecord::Base
       self.event_items.delete( event_item )
       self.save!
     end
+  end
+
+  def assign_item event,actioner_user,event_user,event_item
+    if !event_item.event_user_id.nil?
+      previous_event_user = EventUser.find event_item.event_user_id
+      previous_user = User.find previous_event_user.user_id
+      NotificationService.assign_item event,actioner_user,event_item.name,previous_user,DESASSIGN
+    end
+    event_user.event_items << event_item
+    user = User.find event_user.user_id
+    NotificationService.assign_item event,actioner_user,event_item.name,user,ASSIGN
+    event_user.save!
+  end
+
+  def desassign_item event,actioner_user,event_item
+    event_user = EventUser.find event_item.event_user_id
+    user = User.find event_user.user_id
+    event_item.event_user_id = nil
+    NotificationService.assign_item event,actioner_user,event_item.name,user,DESASSIGN
+    event_item.save!    
   end
 
 	private
