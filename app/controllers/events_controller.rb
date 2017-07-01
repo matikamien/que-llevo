@@ -16,9 +16,8 @@ class EventsController < ApplicationController
 
   def create
   	event = Event.create! event_params
-    event.add_users params[ :user_ids ],current_user if !params[ :user_ids ].nil?
+    event.add_users params[ :user_ids ],current_user
     event.add_items params[ :item_ids ] if !params[ :item_ids ].nil?
-    NotificationService.invite_users_to_event event,params[ :user_ids ],current_user if !params[ :user_ids ].nil?
     expose event, serializer: EventSerializer
   end
 
@@ -36,6 +35,7 @@ class EventsController < ApplicationController
     render_json  :average => average, :total => total
   end
 
+  # También desasigna el item si no manda el parámetro event_user_id
   def assign_item
     event = Event.find params[ :id ]
     event_item = EventItem.find params[ :event_item_id ]
