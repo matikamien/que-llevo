@@ -21,13 +21,25 @@ class Event < ActiveRecord::Base
     end
 	end
 
+  def get_total
+    total = 0
+    self.event_users.each do | user |
+      total += user.spent_money
+    end
+    total
+  end
+
+  def get_average
+    ( get_total / self.event_users.count )
+  end
+
 	private
 
 		def create_event_user_and_add_to_event user_id
       user = User.find user_id
       if ( !user.events.include? self )
       	user.events << self
-	      event_user = EventUser.create! event_id:self.id , user_id:user_id
+	      event_user = EventUser.create! event_id:self.id , user_id:user_id , spent_money:0
 	      self.event_users << event_user
       end
       self.save!      

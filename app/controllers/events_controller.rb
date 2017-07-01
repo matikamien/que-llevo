@@ -22,17 +22,21 @@ class EventsController < ApplicationController
     expose event, serializer: EventSerializer
   end
 
-  def add_user
+  def update
     event = Event.find params[ :id ]
-    event.add_users params[ :user_ids ],current_user.id
-    NotificationService.invite_users_to_event event.name,params[ :user_ids ],current_user
+    if !params[ :user_ids ].nil?
+      event.add_users params[ :user_ids ],current_user.id
+      NotificationService.invite_users_to_event event.name,params[ :user_ids ],current_user
+    end
+    event.add_items params[ :item_ids ] if !params[ :item_ids ].nil? 
     expose event, serializer: EventSerializer
   end
 
-  def add_item
+  def get_average
     event = Event.find params[ :id ]
-    event.add_items params[ :item_ids ]
-    expose event, serializer: EventSerializer
+    average = event.get_average
+    total = event.get_total
+    render_json  :average => average, :total => total
   end
 
   def assign_item

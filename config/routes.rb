@@ -8,8 +8,8 @@ Rails.application.routes.draw do
       post "/:id/event_items/:event_item_id/assign", to: "events#assign_item"
       post "/:id/event_items", to: "events#add_item"
       delete "/:id/event_items/:event_item_id", to: "events#delete_item"
-      post "/:id/add_user", to: "events#add_user"
-      post "/:id/add_item", to: "events#add_item"
+      post "/:id/update", to: "events#update"
+      get "/:id/average", to: "events#get_average"
     end
   end
 
