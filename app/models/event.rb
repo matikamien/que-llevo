@@ -51,7 +51,7 @@ class Event < ActiveRecord::Base
       	user.events << self
 	      event_user = EventUser.create! event_id:self.id , user_id:user_id , spent_money:0
 	      self.event_users << event_user
-        NotificationService.invite_users_to_event self.name,[ user_id ],current_user
+        NotificationService.invite_users_to_event self,[ user_id ],current_user
       end
       self.save!      
     end

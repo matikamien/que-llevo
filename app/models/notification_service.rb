@@ -2,14 +2,15 @@ require 'fcm'
 
 class NotificationService
 
-	def self.invite_users_to_event event_name,user_ids,current_user
+	def self.invite_users_to_event event,user_ids,current_user
 		NotificationService.initialize_fcm
 		registration_ids = NotificationService.get_registration_ids user_ids
 		options = {data: 
 										 { 
 										 	 notification_code: 1, 
-											 event_name: event_name,
-									 		 user_name: ( current_user.name + " " + current_user.surname )
+											 event_name: event.name,
+									 		 user_name: ( current_user.name + " " + current_user.surname ),
+									 		 event_id: event.id
 									 	 }
 							}
 		response = @fcm.send(registration_ids, options)
