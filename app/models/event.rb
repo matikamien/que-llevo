@@ -33,6 +33,16 @@ class Event < ActiveRecord::Base
     ( get_total / self.event_users.count )
   end
 
+  def delete_items item_ids
+    item_ids_as_array = []
+    item_ids_as_array = Parser.split item_ids if !item_ids.nil? 
+    item_ids_as_array.each do | item_id |
+      event_item = EventItem.find item_id
+      self.event_items.delete( event_item )
+      self.save!
+    end
+  end
+
 	private
 
 		def create_event_user_and_add_to_event user_id

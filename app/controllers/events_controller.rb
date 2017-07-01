@@ -53,11 +53,9 @@ class EventsController < ApplicationController
     expose event, serializer: EventSerializer
   end
 
-  def delete_item
+  def delete_items
     event = Event.find params[ :id ]
-    event_item = EventItem.find params[ :event_item_id ]
-    event.event_items.delete( event_item )
-    event.save!
+    event.delete_items params[ :event_item_ids ]
     expose event, serializer: EventSerializer
   end
 
