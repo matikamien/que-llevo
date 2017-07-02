@@ -4,8 +4,8 @@ class Event < ActiveRecord::Base
 
 	validates :name, :date, presence: :true
 
-  DESASSIGN = "desasignó"
-  ASSIGN = "asignó"
+  DEASSIGNED = "deassigned"
+  ASSIGNED = "assigned"
 
 	def add_users users,current_user
     user_ids_as_array = []
@@ -50,11 +50,11 @@ class Event < ActiveRecord::Base
     if !event_item.event_user_id.nil?
       previous_event_user = EventUser.find event_item.event_user_id
       previous_user = User.find previous_event_user.user_id
-      NotificationService.assign_item event,actioner_user,event_item.name,previous_user,DESASSIGN
+      NotificationService.assign_item event,actioner_user,event_item.name,previous_user,DEASSIGNED
     end
     event_user.event_items << event_item
     user = User.find event_user.user_id
-    NotificationService.assign_item event,actioner_user,event_item.name,user,ASSIGN
+    NotificationService.assign_item event,actioner_user,event_item.name,user,ASSIGNED
     event_user.save!
   end
 
@@ -62,7 +62,7 @@ class Event < ActiveRecord::Base
     event_user = EventUser.find event_item.event_user_id
     user = User.find event_user.user_id
     event_item.event_user_id = nil
-    NotificationService.assign_item event,actioner_user,event_item.name,user,DESASSIGN
+    NotificationService.assign_item event,actioner_user,event_item.name,user,DEASSIGNED
     event_item.save!    
   end
 
@@ -78,7 +78,7 @@ class Event < ActiveRecord::Base
   def get_amount_of item_name
     amount = 0
     self.event_items.each do | event_item | 
-      if event_item.name == item_name
+      if event_item.name] == item_name
         amount += 1
       end
     end    
