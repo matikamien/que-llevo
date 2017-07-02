@@ -78,7 +78,7 @@ class Event < ActiveRecord::Base
   def get_amount_of item_name
     amount = 0
     self.event_items.each do | event_item | 
-      if event_item.name] == item_name
+      if event_item.name == item_name
         amount += 1
       end
     end    
