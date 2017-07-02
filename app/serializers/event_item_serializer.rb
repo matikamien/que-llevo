@@ -1,3 +1,3 @@
 class EventItemSerializer < ActiveModel::Serializer
-  attributes :id, :name, :cost, :bought
+  attributes :id, :event_id, :name, :cost, :bought
 end
