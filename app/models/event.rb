@@ -27,7 +27,7 @@ class Event < ActiveRecord::Base
   def get_total
     total = 0
     self.event_users.each do | user |
-      total += user.spent_money
+      total += user.calculate_spent_money
     end
     total
   end
