@@ -50,11 +50,11 @@ class Event < ActiveRecord::Base
     if !event_item.event_user_id.nil?
       previous_event_user = EventUser.find event_item.event_user_id
       previous_user = User.find previous_event_user.user_id
-      NotificationService.assign_item event,actioner_user,event_item.name,previous_user,DEASSIGNED
+      NotificationService.assign_item event,actioner_user,event_item.name,previous_user,DEASSIGNED if (actioner_user != previous_user)
     end
     event_user.event_items << event_item
     user = User.find event_user.user_id
-    NotificationService.assign_item event,actioner_user,event_item.name,user,ASSIGNED
+    NotificationService.assign_item event,actioner_user,event_item.name,user,ASSIGNED if (actioner_user != user)
     event_user.save!
   end
 
@@ -62,7 +62,7 @@ class Event < ActiveRecord::Base
     event_user = EventUser.find event_item.event_user_id
     user = User.find event_user.user_id
     event_item.event_user_id = nil
-    NotificationService.assign_item event,actioner_user,event_item.name,user,DEASSIGNED
+    NotificationService.assign_item event,actioner_user,event_item.name,user,DEASSIGNED if (actioner_user != user)
     event_item.save!    
   end
 
