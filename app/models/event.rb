@@ -66,6 +66,25 @@ class Event < ActiveRecord::Base
     event_item.save!    
   end
 
+  def check_pending_items
+    self.event_items.each do | event_item | 
+      if event_item.bought == false
+        return true
+      end
+    end
+    return false
+  end
+
+  def get_amount_of item_name
+    amount = 0
+    self.event_items.each do | event_item | 
+      if event_item.name == item_name
+        amount += 1
+      end
+    end    
+    amount
+  end
+
 	private
 
 		def create_event_user_and_add_to_event user_id,current_user

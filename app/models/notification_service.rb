@@ -34,6 +34,24 @@ class NotificationService
 		response = @fcm.send(registration_ids, options)
 	end
 
+	def self.send_recommendation event,recommendation
+		NotificationService.initialize_fcm
+		registration_ids = []
+		registration_ids = (NotificationService.get_token_from_event event)
+
+		options = {data: 
+										 { 
+										 	 notification_code: 3, 
+											 event_name: event.name,
+									 		 event_id: event.id,
+									 		 item_name_to_buy: recommendation.item_name,
+									 		 amount_to_buy: recommendation.amount
+									 	 }
+							}
+		byebug
+		response = @fcm.send(registration_ids, options)
+	end
+
 	private
 
 		def self.initialize_fcm
@@ -49,6 +67,15 @@ class NotificationService
 	      tokens << user.firebase_token
 	    end
 	    tokens
+		end
+
+		def self.get_token_from_event event
+			tokens = []
+			event.event_users.each do | event_user |
+				user = User.find event_user.user_id
+				tokens << user.firebase_token
+			end			
+			tokens
 		end
 
 end

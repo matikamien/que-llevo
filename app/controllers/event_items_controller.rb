@@ -4,10 +4,10 @@ class EventItemsController < ApplicationController
 
 	def buy_item
 		event_item = EventItem.find params[ :id ]
-		event_item.bought = params[ :bought ]
-		event_item.cost = params[ :cost ].to_f
-		event_item.save!
+		event = Event.find event_item.event_id
+		BuyItemService.buy_item params[ :id ],params[ :cost ].to_f,event,params[ :bought ]
 		expose event_item, serializer: EventItemSerializer
 	end
 
 end
+		
