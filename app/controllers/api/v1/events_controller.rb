@@ -4,7 +4,6 @@ class Api::V1::EventsController < Api::V1::ApiController
   before_action :doorkeeper_authorize!
 
   def index
-  	byebug
 	events = Event.all
 	expose events, each_serializer: EventSerializer
   end

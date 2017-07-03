@@ -48,7 +48,6 @@ class NotificationService
 									 		 amount_to_buy: recommendation.amount
 									 	 }
 							}
-		byebug
 		response = @fcm.send(registration_ids, options)
 	end
 
