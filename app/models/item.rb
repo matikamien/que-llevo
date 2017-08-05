@@ -18,7 +18,8 @@ class Item < ActiveRecord::Base
 	    Item.create! name:'Chorizo'
 	    Item.create! name:'Morcilla'
 	    Item.create! name:'Provoleta'
-	    Item.create! name:'Agua'		
+	    Item.create! name:'Agua'
+	    Item.create! name:'Carbon'
 		end
 
 end
