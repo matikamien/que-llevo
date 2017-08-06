@@ -30,9 +30,7 @@ class EventsController < ApplicationController
 
   def get_average
     event = Event.find params[ :id ]
-    average = event.get_average
-    total = event.get_total
-    render_json  :average => average, :total => total
+    expose event, serilizer: EventAverageSerializer
   end
 
   # También desasigna el item si no manda el parámetro event_user_id
