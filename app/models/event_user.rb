@@ -6,7 +6,7 @@ class EventUser < ActiveRecord::Base
   def calculate_spent_money
   	spent_money = 0
   	self.event_items.each do | event_item |
-  		spent_money += event_item.cost
+      spent_money += event_item.cost if !event_item.cost.nil?
   	end	
   	spent_money
   end
